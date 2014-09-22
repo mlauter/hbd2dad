@@ -2,20 +2,60 @@ var map;
 
 function initialize() {
   var mapOptions = {
-    zoom: 2,
-    center: { lat: 2.8, lng: -187.3},
+    zoom: 3,
+    center: { lat: 35.434588, lng: -40.777965},
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
 
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 
-  // Create a script tag and set the USGS URL as the source.
-  var script = document.createElement('script');
-  script.src = 'http://earthquake.usgs.gov/earthquakes/feed/geojsonp/2.5/week';
-  var s = document.getElementsByTagName('script')[0];
-  console.log(script);
-  s.parentNode.insertBefore(script, s);
+  var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">Happy birthday Dad!</h1>'+
+      '<div id="bodyContent">'+
+      '<p>At (almost) any given moment, ' +
+      'someone, somewhere in the world '+
+      'is wishing someone else '+
+      'a happy birthday... '+
+      'on Twitter. '+
+      'Watch happy birthday tweets appear live '+
+      'on this map.</p>'+
+      '<p>Love, Miriam</p>'+
+      '</div>'+
+      '</div>';
+
+  var infowindow = new google.maps.InfoWindow({
+      content: contentString,
+      position: { lat: 35.434588, lng: -40.777965},
+      draggable: true,
+      maxWidth: 150
+  });
+
+  infowindow.open(map)
+
+  // Set the firebase reference
+  var coordsRef = new Firebase('https://happybirthdaydad.firebaseio.com/processed_coords');
+
+  coordsRef.on('child_added', function(childSnapshot, prevChildName) {
+    // code to handle new child.
+    var lng = childSnapshot.child(0).val()
+    var lat = childSnapshot.child(1).val()
+    var icon = new google.maps.MarkerImage(
+        'images/bday_candle_icon.png',
+        new google.maps.Size(10,52),    // size of the image
+        new google.maps.Point(0,0), // origin, in this case top-left corner
+        new google.maps.Point(5, 52)    // anchor, i.e. the point half-way along the bottom of the image
+    );
+    var marker = new google.maps.Marker({
+      position: {lat: lat, lng: lng},
+      icon: icon,
+      map: map,
+    });
+  });
+
+
 }
 
 window.eqfeed_callback = function(results) {
