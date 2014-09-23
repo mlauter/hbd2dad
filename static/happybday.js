@@ -56,25 +56,4 @@ function initialize() {
   });
 
 
-}
-
-window.eqfeed_callback = function(results) {
-  for (var i = 0; i < results.features.length; i++) {
-    var coords = results.features[i].geometry.coordinates;
-    var icon = new google.maps.MarkerImage(
-        'images/bday_candle_icon.png',
-        new google.maps.Size(10,52),    // size of the image
-        new google.maps.Point(0,0), // origin, in this case top-left corner
-        new google.maps.Point(5, 52)    // anchor, i.e. the point half-way along the bottom of the image
-    );
-    var marker = new google.maps.Marker({
-      position: {lat: coords[1], lng: coords[0]},
-      icon: icon,
-      map: map,
-    });
-  }
-}
-
-
-
 google.maps.event.addDomListener(window, 'load', initialize);
