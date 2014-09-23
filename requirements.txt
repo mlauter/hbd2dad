@@ -2,7 +2,11 @@ Flask==0.10.1
 Jinja2==2.7.3
 MarkupSafe==0.23
 Werkzeug==0.9.6
-basicauth==0.2
+gnureadline==6.3.3
 httplib2==0.9
 itsdangerous==0.24
--e git+https://github.com/simplegeo/python-oauth2.git@6c7c21bd0b36ee529049ea16cd6ad299a22d1c85#egg=oauth2-master
+oauth2==1.5.211
+python-firebase==1.2
+requests==2.4.1
+tweepy==2.3.0
+wsgiref==0.1.2

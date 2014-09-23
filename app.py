@@ -9,7 +9,7 @@ def homepage():
     return render_template('hello_maps.html', key=os.environ["GOOGLE_MAPS_API_KEY"])
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
 
 
 
